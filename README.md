@@ -43,7 +43,7 @@ streamlit run app.py
 
 ## 🧩 Screenshot
 
-<img src="image" alt="Benchmark Visualizer Icon" width="120" />
+<img src="image.png" alt="Benchmark Visualizer Screenshoot" width="120" />
 
 ---
 
