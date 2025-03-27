@@ -43,7 +43,7 @@ streamlit run app.py
 
 ## 🧩 Screenshot
 
-[[[![image.png](https://i.postimg.cc/mrKtjn2q/image.png)](https://postimg.cc/1gcm5JFc)](https://i.postimg.cc/6qSS49pT/icon.png)](https://i.postimg.cc/6qSS49pT/icon.png)
+[icon.png](https://postimg.cc/vxrXpw9d)
 
 ---
 
