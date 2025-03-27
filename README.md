@@ -45,7 +45,7 @@ streamlit run app.py
 ## 🧩 Screenshot
 
 <p align="center">
-  <img src="icon.png" alt="Screenshot grafico" width="250" />
+  <img src="[icon.png](https://i.postimg.cc/6qSS49pT/icon.png)" alt="Icona App" width="250" />
 </p>
 
 ---
@@ -69,18 +69,4 @@ by [**Prime Build PC**](https://github.com/PrimeBuild-pc)
 
 Questo progetto è distribuito sotto licenza [MIT](LICENSE).
 
-```
-
----
-
-### ✅ Passaggi successivi
-
-1. **Salva** questo contenuto nel tuo file `README.md`
-2. Crea anche un file `LICENSE` (puoi usare MIT, Apache o nessuna licenza se preferisci)
-3. Commit finale:
-
-```bash
-git add README.md LICENSE icon.png
-git commit -m "Add enhanced README with badges, support and license"
-git push
 ```
