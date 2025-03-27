@@ -51,9 +51,13 @@ load_session_data()
 # App header with logo
 col1, col2 = st.columns([1, 5])
 with col1:
-    logo = load_image_url("https://i.postimg.cc/FKyRC3Vh/logo.png")
-    if logo is not None:
+    try:
+        # Load from local file instead of URL
+        from PIL import Image
+        logo = Image.open("generated-icon.png")
         st.image(logo, width=80)
+    except Exception as e:
+        st.error(f"Error loading local logo: {str(e)}")
 with col2:
     st.title("Benchmark Visualizer")
 
