@@ -1,8 +1,7 @@
 <p align="center">
-  <a href="https://postimg.cc/vxrXpw9d">
-    <img src="https://i.postimg.cc/6qSS49pT/icon.png" alt="Benchmark Visualizer Icon" width="120" />
-  </a>
+  <img src="icon.png" alt="Benchmark Visualizer Icon" width="120" />
 </p>
+
 <h1 align="center">📊 Benchmark Visualizer</h1>
 
 <p align="center">
