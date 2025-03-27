@@ -1,7 +1,8 @@
 <p align="center">
-[![Benchmark Visualizer Icon](https://i.postimg.cc/6qSS49pT/icon.png)](https://postimg.cc/vxrXpw9d)
+  <a href="https://postimg.cc/vxrXpw9d">
+    <img src="https://i.postimg.cc/6qSS49pT/icon.png" alt="Benchmark Visualizer Icon" width="120" />
+  </a>
 </p>
-
 <h1 align="center">📊 Benchmark Visualizer</h1>
 
 <p align="center">
