@@ -1,4 +1,3 @@
-```markdown
 <p align="center">
   <img src="icon.png" alt="Benchmark Visualizer Icon" width="120" />
 </p>
@@ -38,7 +37,6 @@ git clone https://github.com/PrimeBuild-pc/benchmark-visualizer.git
 cd benchmark-visualizer
 pip install -r requirements.txt
 streamlit run app.py
-```
 
 ---
 
