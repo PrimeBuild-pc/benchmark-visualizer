@@ -130,59 +130,71 @@ with tabs[0]:
                 mask = filtered_df['Test'].str.lower().str.contains(search_term, na=False)
                 filtered_df = filtered_df[mask]
         
-        # Display the chart based on view mode and chart type
-        if st.session_state.view_mode == 'FPS':
-            fps_metrics = ['Avg FPS', '1% Low', 'Max FPS', 'Min FPS', '0.1% Low']
-            available_metrics = [col for col in fps_metrics if col in filtered_df.columns]
-            
-            if available_metrics:
-                selected_metric = st.selectbox("Select Metric to Visualize", available_metrics)
-                
-                if st.session_state.chart_type == 'bar':
-                    fig = build_bar_chart(filtered_df, 'Test', selected_metric, st.session_state.theme)
-                elif st.session_state.chart_type == 'line':
-                    fig = build_line_chart(filtered_df, 'Test', selected_metric, st.session_state.theme)
+        # Aggiunta a Tab 1: Visualizzazione (filtro per titolo principale)
+        if not st.session_state.tests.empty:
+            st.session_state.tests.sort_values(by='Test', inplace=True)
+
+            # Ricava tutti i titoli base (prima della -)
+            base_titles = st.session_state.tests['Test'].apply(lambda x: x.split(' - ')[0] if ' - ' in x else x)
+            unique_titles = base_titles.unique().tolist()
+
+            selected_title = st.selectbox("Filter by Game Title", options=["All"] + unique_titles)
+
+            filtered_df = st.session_state.tests.copy()
+            if selected_title != "All":
+                filtered_df = filtered_df[filtered_df['Test'].str.startswith(selected_title)]
+
+            # Visualizzazione grafico sulla base del filtro
+            if st.session_state.view_mode == 'FPS':
+                fps_metrics = ['Avg FPS', '1% Low', 'Max FPS', 'Min FPS', '0.1% Low']
+                available_metrics = [col for col in fps_metrics if col in filtered_df.columns]
+
+                if available_metrics:
+                    selected_metric = st.selectbox("Select Metric to Visualize", available_metrics)
+
+                    if st.session_state.chart_type == 'bar':
+                        fig = build_bar_chart(filtered_df, 'Test', selected_metric, st.session_state.theme)
+                    elif st.session_state.chart_type == 'line':
+                        fig = build_line_chart(filtered_df, 'Test', selected_metric, st.session_state.theme)
+                    else:
+                        fig = build_stacked_bar_chart(filtered_df, 'Test', available_metrics, st.session_state.theme)
+
+                    if st.session_state.highlight_best and st.session_state.chart_type == 'bar':
+                        highlight_best_performance(fig, filtered_df, 'Test', selected_metric)
+
+                    st.plotly_chart(fig, use_container_width=True)
+
+                    if len(available_metrics) > 1 and st.checkbox("Show All Metrics Comparison"):
+                        for metric in available_metrics:
+                            if metric != selected_metric:
+                                if st.session_state.chart_type == 'bar':
+                                    fig = build_bar_chart(filtered_df, 'Test', metric, st.session_state.theme)
+                                elif st.session_state.chart_type == 'line':
+                                    fig = build_line_chart(filtered_df, 'Test', metric, st.session_state.theme)
+
+                                if st.session_state.highlight_best and st.session_state.chart_type == 'bar':
+                                    highlight_best_performance(fig, filtered_df, 'Test', metric)
+
+                                st.subheader(metric)
+                                st.plotly_chart(fig, use_container_width=True)
                 else:
-                    fig = build_stacked_bar_chart(filtered_df, 'Test', available_metrics, st.session_state.theme)
-                
-                if st.session_state.highlight_best and st.session_state.chart_type == 'bar':
-                    highlight_best_performance(fig, filtered_df, 'Test', selected_metric)
-                
-                st.plotly_chart(fig, use_container_width=True)
-                
-                # Multi-metric comparison
-                if len(available_metrics) > 1 and st.checkbox("Show All Metrics Comparison"):
-                    for metric in available_metrics:
-                        if metric != selected_metric:
-                            if st.session_state.chart_type == 'bar':
-                                fig = build_bar_chart(filtered_df, 'Test', metric, st.session_state.theme)
-                            elif st.session_state.chart_type == 'line':
-                                fig = build_line_chart(filtered_df, 'Test', metric, st.session_state.theme)
-                            
-                            if st.session_state.highlight_best and st.session_state.chart_type == 'bar':
-                                highlight_best_performance(fig, filtered_df, 'Test', metric)
-                                
-                            st.subheader(metric)
-                            st.plotly_chart(fig, use_container_width=True)
-            else:
-                st.warning("No FPS metrics found in the data. Please ensure your data contains FPS metrics.")
-                
-        else:  # Points mode
-            if 'Test' in filtered_df.columns and 'Score' in filtered_df.columns:
-                if st.session_state.chart_type == 'bar':
-                    fig = build_bar_chart(filtered_df, 'Test', 'Score', st.session_state.theme)
-                elif st.session_state.chart_type == 'line':
-                    fig = build_line_chart(filtered_df, 'Test', 'Score', st.session_state.theme)
+                    st.warning("No FPS metrics found in the data. Please ensure your data contains FPS metrics.")
+
+            else:  # Points mode
+                if 'Test' in filtered_df.columns and 'Score' in filtered_df.columns:
+                    if st.session_state.chart_type == 'bar':
+                        fig = build_bar_chart(filtered_df, 'Test', 'Score', st.session_state.theme)
+                    elif st.session_state.chart_type == 'line':
+                        fig = build_line_chart(filtered_df, 'Test', 'Score', st.session_state.theme)
+                    else:
+                        fig = build_bar_chart(filtered_df, 'Test', 'Score', st.session_state.theme)
+
+                    if st.session_state.highlight_best and st.session_state.chart_type == 'bar':
+                        highlight_best_performance(fig, filtered_df, 'Test', 'Score')
+
+                    st.plotly_chart(fig, use_container_width=True)
                 else:
-                    # In points mode, stacked doesn't make much sense, fallback to bar
-                    fig = build_bar_chart(filtered_df, 'Test', 'Score', st.session_state.theme)
-                
-                if st.session_state.highlight_best and st.session_state.chart_type == 'bar':
-                    highlight_best_performance(fig, filtered_df, 'Test', 'Score')
-                
-                st.plotly_chart(fig, use_container_width=True)
-            else:
-                st.warning("No Score data found. Please ensure your data contains Test and Score columns.")
+                    st.warning("No Score data found. Please ensure your data contains Test and Score columns.")
     else:
         st.info("No data available. Please add data through the 'Data Input' or 'Import Data' tabs.")
 
@@ -190,53 +202,51 @@ with tabs[0]:
 with tabs[1]:
     st.subheader("Manual Data Entry")
     
-    # Create form based on view mode
     with st.form(key="data_entry_form"):
-        test_name = st.text_input("Test Name/Label", key="test_name")
-        
+        game_title = st.text_input("Game Title", key="game_title")
+        setting_label = st.text_input("Graphics Setting (e.g. 1080p Ultra)", key="setting_label")
+
+        full_label = f"{game_title} - {setting_label}" if setting_label else game_title
+
         if st.session_state.view_mode == 'FPS':
             avg_fps = st.number_input("Average FPS", min_value=0.0, step=0.1, format="%.1f")
             low_1_pct = st.number_input("1% Low", min_value=0.0, step=0.1, format="%.1f")
             max_fps = st.number_input("Max FPS", min_value=0.0, step=0.1, format="%.1f")
             min_fps = st.number_input("Min FPS", min_value=0.0, step=0.1, format="%.1f")
             low_01_pct = st.number_input("0.1% Low", min_value=0.0, step=0.1, format="%.1f")
-        else:  # Points mode
+        else:
             score = st.number_input("Score", min_value=0.0, step=0.1, format="%.1f")
-        
+
         submit_button = st.form_submit_button("Add Data")
-        
+
         if submit_button:
-            if not test_name:
-                st.error("Test name cannot be empty.")
+            if not game_title:
+                st.error("Game title cannot be empty.")
             else:
-                # Create new row
                 if st.session_state.view_mode == 'FPS':
                     new_data = {
-                        'Test': test_name,
+                        'Test': full_label,
                         'Avg FPS': avg_fps,
                         '1% Low': low_1_pct,
                         'Max FPS': max_fps,
                         'Min FPS': min_fps,
                         '0.1% Low': low_01_pct
                     }
-                else:  # Points mode
+                else:
                     new_data = {
-                        'Test': test_name,
+                        'Test': full_label,
                         'Score': score
                     }
-                
-                # Add to session state
+
                 if st.session_state.tests.empty:
                     st.session_state.tests = pd.DataFrame([new_data])
                 else:
-                    st.session_state.tests = pd.concat([st.session_state.tests, pd.DataFrame([new_data])], 
-                                                      ignore_index=True)
-                
-                # Save data and refresh
+                    st.session_state.tests = pd.concat([st.session_state.tests, pd.DataFrame([new_data])], ignore_index=True)
+
                 save_session_data()
-                st.success(f"Added test: {test_name}")
+                st.success(f"Added test: {full_label}")
                 st.rerun()
-    
+
     # Display current data
     if not st.session_state.tests.empty:
         st.subheader("Current Data")
@@ -429,3 +439,7 @@ Benchmark B,8750
 
 # Auto-save session when app closes or is refreshed
 save_session_data()
+
+# Alla visualizzazione grafico: ordina per Test per mantenere gruppi uniti
+if not st.session_state.tests.empty:
+    st.session_state.tests.sort_values(by='Test', inplace=True)
