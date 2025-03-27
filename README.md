@@ -26,7 +26,7 @@
 
 ## 🌐 Prova la web app
 
-👉 [**Vai all’app su Streamlit**](https://primebuild-pc-benchmark-visualizer.streamlit.app)
+👉 [**Vai all’app su Streamlit**](https://benchmark-visualizer.streamlit.app/)
 
 ---
 
