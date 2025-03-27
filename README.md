@@ -37,6 +37,7 @@ git clone https://github.com/PrimeBuild-pc/benchmark-visualizer.git
 cd benchmark-visualizer
 pip install -r requirements.txt
 streamlit run app.py
+```
 
 ---
 
