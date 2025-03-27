@@ -43,7 +43,7 @@ streamlit run app.py
 
 ## 🧩 Screenshot
 
-<img src="image.png" alt="Benchmark Visualizer Screenshoot" width="120" />
+<img src="image.png" alt="Benchmark Visualizer Screenshoot" width="600" />
 
 ---
 
@@ -58,7 +58,7 @@ Ti piace questo tool? Offrimi un caffè ☕:
 ## 🛠️ Realizzato con
 
 [![Streamlit](https://img.shields.io/badge/Made%20with-Streamlit-orange?logo=streamlit)](https://streamlit.io)  
-by [**Prime Build PC**](https://github.com/PrimeBuild-pc)
+by [**Prime Build**](https://github.com/PrimeBuild-pc)
 
 ---
 
