@@ -43,9 +43,7 @@ streamlit run app.py
 
 ## 🧩 Screenshot
 
-<p align="center">
-  <img src="[icon.png](https://i.postimg.cc/6qSS49pT/icon.png)" alt="Icona App" width="250" />
-</p>
+[![image.png](https://i.postimg.cc/mrKtjn2q/image.png)](https://postimg.cc/1gcm5JFc)
 
 ---
 
