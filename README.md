@@ -43,7 +43,7 @@ streamlit run app.py
 
 ## 🧩 Screenshot
 
-<img src="https://postimg.cc/vxrXpw9d" />
+<img src="icon.png" alt="Benchmark Visualizer Icon" width="120" />
 
 ---
 
