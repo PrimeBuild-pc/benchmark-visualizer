@@ -1,3 +1,5 @@
+<h1 align="center">❗ Not yet completed ❗</h1>
+
 <p align="center">
   <img src="icon.png" alt="Benchmark Visualizer Icon" width="120" />
 </p>
